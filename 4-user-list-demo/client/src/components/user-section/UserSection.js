@@ -2,6 +2,7 @@ import {UserItem} from "./user-item/UserItem";
 import {UserDetails} from "./user-details/UserDetails";
 import {useState} from "react";
 import * as userService  from '../../services/userService';
+import {UserEdit} from "./user-edit/UserEdit";
 
 const UserActions = {
     Details: 'details',
@@ -17,25 +18,27 @@ export const UserSection = ({users}) => {
 */
     const [ userAction, setUserAction ] = useState({user: null, action: null});
 
-    const detailsClickHandler = (_id) => {
+    const userActionClickHandler = (_id, actionType) => {
 
         userService.getOne(_id)
             .then(user => {
                 setUserAction({
                     user,
-                    action: UserActions.Details
+                    action: actionType
                 });
             });
 
     };
 
-    const detailsCloseHandler = () => {
+    const closeHandler = () => {
         setUserAction({user: null, action: null});
-    }
+    };
 
     return (
         <div className="table-wrapper">
-            {userAction.action == UserActions.Details && <UserDetails user={userAction.user} onClose={detailsCloseHandler}/>}
+            {userAction.action === UserActions.Details && <UserDetails user={userAction.user} onClose={closeHandler} />}
+
+            {userAction.action === UserActions.Edit && <UserEdit user={userAction.user} onClose={closeHandler} />}
 
             <table className="table">
                 <thead>
@@ -93,7 +96,7 @@ export const UserSection = ({users}) => {
                 </tr>
                 </thead>
                 <tbody>
-                {users.map(user => <UserItem key={user._id} {...user} onDetailsClick={detailsClickHandler} />)}
+                {users.map(user => <UserItem key={user._id} {...user} onActionClick={userActionClickHandler} />)}
                 </tbody>
             </table>
         </div>
