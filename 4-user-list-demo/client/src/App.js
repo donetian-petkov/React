@@ -1,21 +1,29 @@
 import './App.css';
+
+// react-related functions
+import {useEffect, useState} from "react";
+
+// services
+import * as userService from './services/userService';
+
+//components
 import {Header} from "./components/common/Header";
 import {Footer} from "./components/common/Footer";
 import {Search} from "./components/search/Search";
 import {UserSection} from "./components/user-section/UserSection";
-import {useEffect, useState} from "react";
 
 function App() {
 
     const [ users, setUsers ] = useState([]);
 
     useEffect(() => {
-        fetch('http://localhost:3005/api/users')
-            .then(res => res.json())
-            .then(result => {
-                setUsers(result.users);
-            });
+
+        userService.getAll()
+            .then(users => setUsers(users));
+
+
     },[]);
+
 
   return (
     <div className="App">
@@ -25,7 +33,7 @@ function App() {
         <main className="main">
 
             <Search />
-            <UserSection />
+            <UserSection users={users} />
 
         </main>
 
