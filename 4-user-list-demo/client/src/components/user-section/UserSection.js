@@ -1,6 +1,6 @@
 import {UserItem} from "./user-item/UserItem";
 import {UserDetails} from "./user-details/UserDetails";
-import {useState} from "react";
+import {useState, useEffect} from "react";
 import * as userService  from '../../services/userService';
 import {UserEdit} from "./user-edit/UserEdit";
 import {UserDelete} from "./user-delete/UserDelete";
@@ -14,12 +14,23 @@ const UserActions = {
 }
 
 
-export const UserSection = ({users}) => {
+export const UserSection = () => {
 
 /*
     const [ selectedUser, setSelectedUser ] = useState(null);
+
 */
+    const [ users, setUsers ] = useState([]);
+
     const [ userAction, setUserAction ] = useState({user: null, action: null});
+
+    useEffect(() => {
+
+        userService.getAll()
+            .then(users => setUsers(users));
+
+
+    },[]);
 
     const userActionClickHandler = (_id, actionType) => {
 
@@ -37,17 +48,49 @@ export const UserSection = ({users}) => {
         setUserAction({user: null, action: null});
     };
 
+    const userCreateHandler = (e) => {
+        e.preventDefault();
+
+        const formData = new FormData(e.target);
+
+        const {
+            firstName,
+            lastName,
+            email,
+            imageUrl,
+        phoneNumber,
+        ...address} = Object.fromEntries(formData);
+
+        const userData = {
+            firstName,
+            lastName,
+            email,
+            imageUrl,
+            phoneNumber,
+            address
+        };
+
+        userService.create(userData)
+            .then(user => {
+                setUsers(oldUsers => [...oldUsers, user]);
+                closeHandler();
+            })
+
+
+
+    }
+
     return (
         <>
         <div className="table-wrapper">
-            
+
             {userAction.action === UserActions.Details && <UserDetails user={userAction.user} onClose={closeHandler} />}
 
             {userAction.action === UserActions.Edit && <UserEdit user={userAction.user} onClose={closeHandler} />}
 
             {userAction.action === UserActions.Delete && <UserDelete user={userAction.user} onClose={closeHandler} />}
 
-            {userAction.action === UserActions.Add && <UserCreate onClose={closeHandler} />}
+            {userAction.action === UserActions.Add && <UserCreate onUserCreate={userCreateHandler} onClose={closeHandler} />}
 
 
             <table className="table">
