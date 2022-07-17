@@ -3,6 +3,7 @@ import {UserDetails} from "./user-details/UserDetails";
 import {useState} from "react";
 import * as userService  from '../../services/userService';
 import {UserEdit} from "./user-edit/UserEdit";
+import {UserDelete} from "./user-delete/UserDelete";
 
 const UserActions = {
     Details: 'details',
@@ -39,6 +40,8 @@ export const UserSection = ({users}) => {
             {userAction.action === UserActions.Details && <UserDetails user={userAction.user} onClose={closeHandler} />}
 
             {userAction.action === UserActions.Edit && <UserEdit user={userAction.user} onClose={closeHandler} />}
+
+            {userAction.action === UserActions.Delete && <UserDelete user={userAction.user} onClose={closeHandler} />}
 
             <table className="table">
                 <thead>
