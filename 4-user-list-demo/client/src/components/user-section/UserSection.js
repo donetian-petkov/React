@@ -4,11 +4,13 @@ import {useState} from "react";
 import * as userService  from '../../services/userService';
 import {UserEdit} from "./user-edit/UserEdit";
 import {UserDelete} from "./user-delete/UserDelete";
+import {UserCreate} from "./user-create/UserCreate";
 
 const UserActions = {
     Details: 'details',
     Edit: 'edit',
-    Delete: 'delete'
+    Delete: 'delete',
+    Add: 'add'
 }
 
 
@@ -36,12 +38,17 @@ export const UserSection = ({users}) => {
     };
 
     return (
+        <>
         <div className="table-wrapper">
+            
             {userAction.action === UserActions.Details && <UserDetails user={userAction.user} onClose={closeHandler} />}
 
             {userAction.action === UserActions.Edit && <UserEdit user={userAction.user} onClose={closeHandler} />}
 
             {userAction.action === UserActions.Delete && <UserDelete user={userAction.user} onClose={closeHandler} />}
+
+            {userAction.action === UserActions.Add && <UserCreate onClose={closeHandler} />}
+
 
             <table className="table">
                 <thead>
@@ -103,7 +110,8 @@ export const UserSection = ({users}) => {
                 </tbody>
             </table>
         </div>
-
+            <button className="btn-add btn" onClick={() => userActionClickHandler(null, 'add')}>Add new user</button>
+            </>
     )
 
 }
