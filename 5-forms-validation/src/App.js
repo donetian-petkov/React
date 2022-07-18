@@ -1,27 +1,37 @@
 import logo from './logo.svg';
 import './App.css';
-import {useState} from "react";
+import {useEffect, useRef, useState} from "react";
 
 function App() {
+
+    const infoRef = useRef();
 
     const [values, setValues] = useState({
         username: '',
         password: '',
         age: '',
         bio: '',
-        gender: 'm',
-        userType: '',
+        gender: 'o',
+        userType: 'corporate',
         tac: false
 
     });
-    
+
+    useEffect(() => {
+
+        if(values.username && values.age) {
+
+            infoRef.current.value = `${values.username} - ${values.age}`;
+
+        }
+
+    },[values.username, values.age])
+
     const changeHandler = (e) => {
-
-        setValues((oldValues) => ({
-            ...oldValues,
-            [e.target.name]: e.target.value
+        setValues(state => ({
+            ...state,
+            [e.target.name]: e.target.type === 'checkbox' ? e.target.checked : e.target.value
         }));
-
     };
 
 
@@ -68,20 +78,23 @@ function App() {
 
             <div>
                 <label htmlFor="individual-user-type">Individual: </label>
-                <input type="radio" name="user-type" value="individual" id="individual-user-type" checked={values.userType === 'individual'} onChange={changeHandler}/>
+                <input type="radio" name="userType" value="individual" id="individual-user-type" checked={values.userType === 'individual'} onChange={changeHandler}/>
                 <label htmlFor="individual-user-type">Corporate: </label>
-                <input type="radio" name="user-type" value="corporate" id="corporate-user-type" checked={values.userType === 'corporate'} onChange={changeHandler}/>
+                <input type="radio" name="userType" value="corporate" id="corporate-user-type" checked={values.userType === 'corporate'} onChange={changeHandler}/>
             </div>
 
             <div>
-                <label htmlFor="tac">Terms and Conditions: </label>
-                <input type="checkbox" name="tac" id="tac" checked={values.tac} onChange={(e) => {setValues((oldValues) => ({
-                    ...oldValues,
-                    'tac': !oldValues['tac']
-                }))}}/>
+                <label htmlFor="tac">Terms and Conditions:</label>
+                <input type="checkbox" name="tac" id="tac" checked={values.tac} onChange={changeHandler}/>
             </div>
 
-            <button>Register</button>
+            <button disabled={!values.tac}>Register</button>
+
+            <div>
+                <label htmlFor="refInput">Ref Input</label>
+                <input name="refInput" type="text" ref={infoRef}/>
+            </div>
+
         </form>
 
       </header>
