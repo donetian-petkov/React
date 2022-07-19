@@ -2,7 +2,7 @@ const baseUrl = 'http://localhost:3005/api/users';
 
 export const getAll = async () => {
 
-    const response = await fetch(`${baseUrl}`);
+    const response = await fetch(`${baseUrl}?page=1&limit=100`);
     const result = await response.json();
 
     return result.users;
