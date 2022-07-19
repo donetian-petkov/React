@@ -139,16 +139,16 @@ export const UserCreate = ({onClose, onUserCreate}) => {
                                 <label htmlFor="country">Country</label>
                                 <div className="input-wrapper">
                                     <span><i className="fa-solid fa-map"></i></span>
-                                    <input id="country" name="country" type="text" value={values.country}
-                                           onChange={changeHandler} onChange={changeHandler}
-                                           onBlur={(e) => minLength(e, 2)}/>
-                                </div>
-                                {
-                                    errors.country &&
-                                    <p className="form-error">
-                                        Country should be at least 2 characters long!
-                                    </p>
-                                }
+<input id="country" name="country" type="text" value={values.country}
+       onChange={changeHandler} onChange={changeHandler}
+       onBlur={(e) => minLength(e, 2)}/>
+</div>
+{
+errors.country &&
+<p className="form-error">
+    Country should be at least 2 characters long!
+</p>
+}
                             </div>
                             <div className="form-group">
                                 <label htmlFor="city">City</label>
@@ -211,6 +211,7 @@ export const UserCreate = ({onClose, onUserCreate}) => {
                 </div>
             </div>
         </div>
+
     )
 
 }
