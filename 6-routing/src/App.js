@@ -1,20 +1,31 @@
-import logo from './logo.svg';
 import './App.css';
-import { Routes, Route } from 'react-router-dom'
+import {Route, Routes} from 'react-router-dom'
+import Home from './components/Home'
+import Contact from "./components/Contact";
+import Pricing from "./components/Pricing";
+import About from "./components/About";
+import PageNotFound from "./components/PageNotFound";
+import Nav from "./components/Nav";
+import {Starships} from "./components/Starships";
 
 function App() {
-  return (
-    <div className="App">
-      <h1>Hello React Router</h1>
+    return (
+        <div className="App">
+            <h1>Hello React Router</h1>
 
-      <Routes>
-        <Route path='/' element={<h2>Home Page</h2>} />
-        <Route path='/about' element={<h2>About Page</h2>} />
-        <Route path='/pricing' element={<h2>Pricing Page</h2>} />
-        <Route path='/contact' element={<h2>Contact Page</h2>} />
-      </Routes>
-    </div>
-  );
+            <Nav/>
+
+            <Routes>
+                <Route path='/' element={<Home/>}/>
+                <Route path='/about' element={<About/>}/>
+                <Route path='/pricing/*' element={<Pricing/>}/>
+                <Route path='/pricing/premium' element={<Contact/>}/>
+                <Route path='/contact' element={<Contact/>}/>
+                <Route path='/starships/:starshipId' element={<Starships/>}/>
+                <Route path='*' element={<PageNotFound/>}/>
+            </Routes>
+        </div>
+    );
 }
 
 export default App;
