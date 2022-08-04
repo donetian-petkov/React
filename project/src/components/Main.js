@@ -1,6 +1,6 @@
 import {MovieContent} from "./mainComponents/contentComponents/MovieContent";
 import {NewsSection} from "./mainComponents/newsComponents/NewsSection";
-import {ComingSoonSection} from "./mainComponents/comingSoonComponents/ComingSoonSection";
+import {CommentSection} from "./mainComponents/commentComponents/CommentSection";
 
 export const Main = () => {
 
@@ -8,7 +8,7 @@ export const Main = () => {
         <div id="main">
             <MovieContent />
             <NewsSection />
-            <ComingSoonSection />
+            <CommentSection />
             <div className="cl">&nbsp;</div>
         </div>
     )

@@ -1,4 +1,4 @@
-export const ComingSoonBox = (props) => {
+export const CommentBox = (props) => {
 
     return (
         <div className="content">

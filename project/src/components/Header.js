@@ -31,7 +31,7 @@ export const Header = () => {
                 <div id="search">
                     <form action="#" method="get" acceptCharset="utf-8">
                         <label htmlFor="search-field">SEARCH</label>
-                        <input type="text" name="search field" value="Enter search here" id="search-field"
+                        <input type="text" name="search field" defaultValue="Enter search here" id="search-field"
                                className="blink search-field"/>
                         <input type="submit" value="GO!" className="search-button"/>
                     </form>
