@@ -1,14 +1,14 @@
-import {Content} from "./mainComponents/Content";
-import {News} from "./mainComponents/News";
-import {ComingSoon} from "./mainComponents/ComingSoon";
+import {MovieContent} from "./mainComponents/contentComponents/MovieContent";
+import {NewsSection} from "./mainComponents/newsComponents/NewsSection";
+import {ComingSoonSection} from "./mainComponents/comingSoonComponents/ComingSoonSection";
 
 export const Main = () => {
 
     return (
         <div id="main">
-            <Content />
-            <News />
-            <ComingSoon />
+            <MovieContent />
+            <NewsSection />
+            <ComingSoonSection />
             <div className="cl">&nbsp;</div>
         </div>
     )

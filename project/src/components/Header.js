@@ -2,15 +2,15 @@ export const Header = () => {
 
     return (
         <div id="header">
-            <h1 id="logo"><a href="#">MovieHunter</a></h1>
-            <div className="social"><span>FOLLOW US ON:</span>
+            <h1 id="logo"><a href="#">Movies For All</a></h1>
+           {/* <div className="social"><span>FOLLOW US ON:</span>
                 <ul>
                     <li><a className="twitter" href="#">twitter</a></li>
                     <li><a className="facebook" href="#">facebook</a></li>
                     <li><a className="vimeo" href="#">vimeo</a></li>
                     <li><a className="rss" href="#">rss</a></li>
                 </ul>
-            </div>
+            </div>*/}
             <div id="navigation">
                 <ul>
                     <li><a className="active" href="#">HOME</a></li>
