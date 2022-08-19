@@ -17,9 +17,12 @@ export const StarshipList = (props) => {
 
 
     return (
+        <>
+            <h1>Starships</h1>
         <ul>
-            {starships.map((x, i) => <NavLink key={x.name} to={`/starships/${i + 1}`}>{x.name}</NavLink>)}
+            {starships.map((x, i) => <li><NavLink key={x.name} to={`/starships/${x.url.split('/')[5]}`}>{x.name} </NavLink></li>)}
         </ul>
+        </>
     )
 
 }

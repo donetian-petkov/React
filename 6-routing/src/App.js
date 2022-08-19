@@ -23,7 +23,7 @@ function App() {
                 <Route path='/pricing/premium' element={<Contact/>}/>
                 <Route path='/contact' element={<Contact/>}/>
                 <Route path='/starships' element={<StarshipList/>}/>
-                <Route path='/starships/:starshipId' element={<Starship/>}/>
+                <Route path='/starships/:starshipId/*' element={<Starship/>}/>
                 <Route path='/millennium-falcon' element={<Navigate to='/starships/10' replace/>}/>
                 <Route path='*' element={<PageNotFound/>}/>
             </Routes>
