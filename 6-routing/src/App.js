@@ -1,12 +1,13 @@
 import './App.css';
-import {Route, Routes} from 'react-router-dom'
+import {Route, Routes, Navigate} from 'react-router-dom'
 import Home from './components/Home'
 import Contact from "./components/Contact";
 import Pricing from "./components/Pricing";
 import About from "./components/About";
 import PageNotFound from "./components/PageNotFound";
 import Nav from "./components/Nav";
-import {Starships} from "./components/Starships";
+import {Starship} from "./components/Starship";
+import {StarshipList} from "./components/StarshipList";
 
 function App() {
     return (
@@ -21,7 +22,9 @@ function App() {
                 <Route path='/pricing/*' element={<Pricing/>}/>
                 <Route path='/pricing/premium' element={<Contact/>}/>
                 <Route path='/contact' element={<Contact/>}/>
-                <Route path='/starships/:starshipId' element={<Starships/>}/>
+                <Route path='/starships' element={<StarshipList/>}/>
+                <Route path='/starships/:starshipId' element={<Starship/>}/>
+                <Route path='/millennium-falcon' element={<Navigate to='/starships/10' replace/>}/>
                 <Route path='*' element={<PageNotFound/>}/>
             </Routes>
         </div>

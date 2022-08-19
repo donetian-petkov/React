@@ -1,12 +1,13 @@
 
-import { useParams, useNavigate } from "react-router-dom";
+import {useParams, useNavigate, useLocation} from "react-router-dom";
 import {useEffect, useState} from "react";
 
-export const Starships = () => {
+export const Starship = () => {
 
     const [starship, setStarship] = useState({});
     const {starshipId} = useParams();
     const navigate = useNavigate();
+    const location = useLocation();
 
     useEffect(() => {
         fetch(`https://swapi.dev/api/starships/${starshipId}`)
