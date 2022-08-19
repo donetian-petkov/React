@@ -1,38 +1,74 @@
+import {Link, useNavigate} from "react-router-dom";
+import {useContext, useState} from "react";
+import {UserContext} from "../contexts/userContext";
+
 export const Header = () => {
+
+    const navigate = useNavigate();
+    const {user, getIsLoggedIn} = useContext(UserContext);
+    const [searchWords, setSearchWords] = useState('');
+
+
+    const changeHandler = (e) => {
+        setSearchWords(e.target.value);
+    };
+
+    const searchHandler = (e) => {
+
+        e.preventDefault();
+
+        navigate(`/search/${searchWords}`);
+
+    };
 
     return (
         <div id="header">
-            <h1 id="logo"><a href="#">Movies For All</a></h1>
-           {/* <div className="social"><span>FOLLOW US ON:</span>
-                <ul>
-                    <li><a className="twitter" href="#">twitter</a></li>
-                    <li><a className="facebook" href="#">facebook</a></li>
-                    <li><a className="vimeo" href="#">vimeo</a></li>
-                    <li><a className="rss" href="#">rss</a></li>
-                </ul>
-            </div>*/}
+            <h1 id="logo"><Link to="/">HOME</Link></h1>
             <div id="navigation">
                 <ul>
-                    <li><a className="active" href="#">HOME</a></li>
-                    <li><a href="#">NEWS</a></li>
-                    <li><a href="#">IN THEATERS</a></li>
-                    <li><a href="#">COMING SOON</a></li>
-                    <li><a href="#">CONTACT</a></li>
-                    <li><a href="#">ADVERTISE</a></li>
+                    {
+                        getIsLoggedIn()
+                            ?
+                            <li><Link to={`/user/${user.id ? user.id : user.objectId}`}> WELCOME, {user.username}</Link>
+                            </li>
+                            : null
+                    }
+                    <li><Link to="/">HOME</Link></li>
+                    <li><Link to="/now_playing">IN THEATERS</Link></li>
+                    <li><Link to="/upcoming">COMING SOON</Link></li>
+                    <li><Link to="/reviews">REVIEWS</Link></li>
+                    <li><Link to="/news">NEWS</Link></li>
+                    {
+                        !getIsLoggedIn()
+                            ? <li><Link to="/login">LOGIN / REGISTER</Link></li>
+                            : <li><Link to="/logout">LOGOUT</Link></li>
+                    }
+
                 </ul>
             </div>
-            <div id="sub-navigation">
-                <ul>
-                    <li><a href="#">SHOW ALL</a></li>
-                    <li><a href="#">LATEST TRAILERS</a></li>
-                    <li><a href="#">TOP RATED</a></li>
-                    <li><a href="#">MOST COMMENTED</a></li>
-                </ul>
+            <div id="sub-navigation" style={{display: 'flex'}}>
+                {
+                    getIsLoggedIn()
+                        ?
+                        <Link
+                            to={`/reviews/${user.id ? user.id : user.objectId}`}
+                            style={{textDecoration: 'none'}}
+                        >
+                            MY REVIEWS
+                        </Link>
+                        : null
+                }
                 <div id="search">
-                    <form action="#" method="get" acceptCharset="utf-8">
+                    <form onSubmit={searchHandler}>
                         <label htmlFor="search-field">SEARCH</label>
-                        <input type="text" name="search field" defaultValue="Enter search here" id="search-field"
-                               className="blink search-field"/>
+                        <input type="text"
+                               name="search_field"
+                               placeholder="Enter search here"
+                               id="search_field"
+                               className="blink search-field"
+                               onChange={changeHandler}
+                               value={searchWords}
+                        />
                         <input type="submit" value="GO!" className="search-button"/>
                     </form>
                 </div>

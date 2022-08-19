@@ -1,13 +1,12 @@
 export const NewsBox = (props) => {
 
-    const date = new Date(props.news.publishedAt).toString();
-
     return (
         <div className="content">
-            <p className="date">{date}</p>
-            <h4>{props.news.title}</h4>
-            <p>&quot;{props.news.description}</p>
-            <a href={props.news.url}>Read more</a></div>
+            <p className="date">{props.news?.published_date}</p>
+            <h5 style={{"color": "#faaf00"}}>{props.news?.title}</h5>
+            <p>&quot;{props.news?.excerpt}&quot;</p>
+            <a href={props.news?.link} target="_blank">Read more</a>
+        </div>
     )
 
 }
