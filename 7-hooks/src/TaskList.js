@@ -1,10 +1,10 @@
-export const TaskList = () => {
+import {TaskItem} from "./TaskItem";
+
+export const TaskList = ({tasks}) => {
 
     return (
         <ul>
-            <li>first</li>
-            <li>second</li>
-            <li>third</li>
+            {tasks.map(x => <TaskItem key={x._id} title={x.title} />)}
         </ul>
     )
 
