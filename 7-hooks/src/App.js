@@ -9,7 +9,7 @@ import {TaskContext} from "./context/TaskContext";
 function App() {
 
     const [tasks, setTasks, isLoading] = useFetch('http://localhost:3030/jsonstore/todos', []);
-    const { removeTodo , addTodo, toggleTodo } = useTodosAPI();
+    const { removeTodo , addTodo, editTodo } = useTodosAPI();
 
     const onTaskCreate = async (newTask) => {
 
@@ -33,19 +33,28 @@ function App() {
 
     }
 
+    const editTaskTitle = async (task, newTitle) => {
+
+        const updatedTask = { ...task, title: newTitle };
+
+        await editTodo(task._id, updatedTask);
+
+        setTasks(state => state.map(x => x._id == task._id ? updatedTask : x));
+
+    }
+
     const toggleTask = async (task) => {
 
         const updatedTask = {...task, isCompleted: !task.isCompleted};
 
-        await toggleTodo(task._id, updatedTask);
-
+        await editTodo(task._id, updatedTask);
 
         setTasks(state => state.map(x => x._id == task._id ? updatedTask : x))
     }
 
 
     return (
-        <TaskContext.Provider value={{tasks, taskDeleteHandler, toggleTask}}>
+        <TaskContext.Provider value={{tasks, taskDeleteHandler, toggleTask, editTaskTitle}}>
             <div className={styles['site-wrapper']}>
                 <header>
                     <h1>TODO App</h1>

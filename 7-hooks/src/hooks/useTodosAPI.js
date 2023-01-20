@@ -20,7 +20,7 @@ const useTodosAPI = () => {
 
     };
 
-    const toggleTodo = (todoId, data) => {
+    const editTodo = (todoId, data) => {
         return fetch(`${url}/${todoId}`, {
             method: 'PUT',
             body: JSON.stringify(data)
@@ -30,7 +30,7 @@ const useTodosAPI = () => {
     return {
         removeTodo,
         addTodo,
-        toggleTodo
+        editTodo
     }
 
 }
