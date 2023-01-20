@@ -1,9 +1,11 @@
-import {useEffect} from "react";
+import {useEffect, useContext} from "react";
+import {TaskContext} from "../context/TaskContext";
 
 export const TaskItem = ({
                              title,
-                             taskDeleteHandler,
                              taskId}) => {
+
+    const { taskDeleteHandler} = useContext(TaskContext);
 
     useEffect(() => {
         console.log('mounted');
@@ -14,7 +16,7 @@ export const TaskItem = ({
     },[]);
 
     return (
-        <li>{title} <button onClick={() => taskDeleteHandler(taskId)}>X</button></li>
+        <li>{title}<button onClick={() => taskDeleteHandler(taskId)}>X</button></li>
     );
 
 };

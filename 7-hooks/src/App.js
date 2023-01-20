@@ -3,10 +3,14 @@ import {TaskList} from "./components/TaskList";
 import styles from './App.module.css';
 import {CreateTask} from "./CreateTask";
 import useFetch from "./hooks/useFetch";
+import useTodosAPI from "./hooks/useTodosAPI";
+import {TaskContext} from "./context/TaskContext";
 
 function App() {
 
-    const [ tasks, setTasks, isLoading] = useFetch('http://localhost:3030/jsonstore/todos', []);
+    const [tasks, setTasks, isLoading] = useFetch('http://localhost:3030/jsonstore/todos', []);
+    const {removeTodo} = useTodosAPI();
+
 
     const onTaskCreate = (newTask) => {
         setTasks(oldTasks => [
@@ -18,28 +22,32 @@ function App() {
         ]);
     };
 
-    const taskDeleteHandler = (taskId) => {
+    const taskDeleteHandler = async (taskId) => {
 
-        setTasks(oldTasks => oldTasks.filter(x => x._id !== taskId))
+        await removeTodo(taskId);
+
+        setTasks(oldTasks => oldTasks.filter(x => x._id !== taskId));
 
     }
 
 
     return (
-        <div className={styles['site-wrapper']}>
-            <header>
-                <h1>TODO App</h1>
-            </header>
+        <TaskContext.Provider value={{taskDeleteHandler}}>
+            <div className={styles['site-wrapper']}>
+                <header>
+                    <h1>TODO App</h1>
+                </header>
 
-            <main>
-                {
-                    isLoading
-                        ?   <p>Loading...</p>
-                        :   <TaskList tasks={tasks} taskDeleteHandler={taskDeleteHandler}/>
-                }
-                            <CreateTask onTaskCreate={onTaskCreate}/>
-                        </main>
-        </div>
+                <main>
+                    {
+                        isLoading
+                            ? <p>Loading...</p>
+                            : <TaskList tasks={tasks} taskDeleteHandler={taskDeleteHandler}/>
+                    }
+                    <CreateTask onTaskCreate={onTaskCreate}/>
+                </main>
+            </div>
+        </TaskContext.Provider>
     );
 }
 
