@@ -9,16 +9,19 @@ import {TaskContext} from "./context/TaskContext";
 function App() {
 
     const [tasks, setTasks, isLoading] = useFetch('http://localhost:3030/jsonstore/todos', []);
-    const {removeTodo} = useTodosAPI();
+    const { removeTodo , addTodo, toggleTodo } = useTodosAPI();
 
+    const onTaskCreate = async (newTask) => {
 
-    const onTaskCreate = (newTask) => {
+        const createdTask = await addTodo(newTask);
+
         setTasks(oldTasks => [
             ...oldTasks,
-            {
+            /*{
                 _id: oldTasks[oldTasks.length - 1]._id + 1 || 1,
                 title: newTask
-            }
+            }*/
+            createdTask
         ]);
     };
 
@@ -30,9 +33,19 @@ function App() {
 
     }
 
+    const toggleTask = async (task) => {
+
+        const updatedTask = {...task, isCompleted: !task.isCompleted};
+
+        await toggleTodo(task._id, updatedTask);
+
+
+        setTasks(state => state.map(x => x._id == task._id ? updatedTask : x))
+    }
+
 
     return (
-        <TaskContext.Provider value={{taskDeleteHandler}}>
+        <TaskContext.Provider value={{tasks, taskDeleteHandler, toggleTask}}>
             <div className={styles['site-wrapper']}>
                 <header>
                     <h1>TODO App</h1>
@@ -42,7 +55,7 @@ function App() {
                     {
                         isLoading
                             ? <p>Loading...</p>
-                            : <TaskList tasks={tasks} taskDeleteHandler={taskDeleteHandler}/>
+                            : <TaskList/>
                     }
                     <CreateTask onTaskCreate={onTaskCreate}/>
                 </main>
