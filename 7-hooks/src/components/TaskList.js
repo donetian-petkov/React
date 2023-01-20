@@ -1,6 +1,9 @@
 import {TaskItem} from "./TaskItem";
 
-export const TaskList = ({tasks, taskDeleteHandler}) => {
+export const TaskList = ({
+                             tasks,
+                             taskDeleteHandler
+}) => {
 
     return (
         <ul>

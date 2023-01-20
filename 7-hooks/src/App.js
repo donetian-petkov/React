@@ -1,16 +1,12 @@
 import './App.module.css';
-import {TaskList} from "./TaskList";
+import {TaskList} from "./components/TaskList";
 import styles from './App.module.css';
 import {CreateTask} from "./CreateTask";
-import {useState} from "react";
+import useFetch from "./hooks/useFetch";
 
 function App() {
 
-    const [tasks, setTasks] = useState([
-        {_id: 1, title: 'first task'},
-        {_id: 2, title: 'second task'},
-        {_id: 3, title: 'third task'}
-    ]);
+    const [ tasks, setTasks, isLoading] = useFetch('http://localhost:3030/jsonstore/todos', []);
 
     const onTaskCreate = (newTask) => {
         setTasks(oldTasks => [
@@ -36,9 +32,13 @@ function App() {
             </header>
 
             <main>
-                <TaskList tasks={tasks} taskDeleteHandler={taskDeleteHandler}/>
-                <CreateTask onTaskCreate={onTaskCreate}/>
-            </main>
+                {
+                    isLoading
+                        ?   <p>Loading...</p>
+                        :   <TaskList tasks={tasks} taskDeleteHandler={taskDeleteHandler}/>
+                }
+                            <CreateTask onTaskCreate={onTaskCreate}/>
+                        </main>
         </div>
     );
 }

@@ -1,6 +1,9 @@
 import {useEffect} from "react";
 
-export const TaskItem = ({title, taskDeleteHandler, taskId}) => {
+export const TaskItem = ({
+                             title,
+                             taskDeleteHandler,
+                             taskId}) => {
 
     useEffect(() => {
         console.log('mounted');
