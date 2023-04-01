@@ -1,5 +1,6 @@
 import {Component} from 'react';
 import TaskItem from "./TaskItem";
+import { TaskContext } from "../context/TaskContext";
 
 class TaskList extends Component {
 
@@ -60,10 +61,22 @@ class TaskList extends Component {
         }))
     }
 
+    taskDeleteHandler(e,taskTitle) {
+
+        e.stopPropagation();
+
+        console.log(taskTitle)
+
+        this.setState(state => ({
+            tasks: state.tasks.filter(x => x.title !== taskTitle)
+        }))
+    }
+
     render() {
 
         return (
-            <>
+
+            <TaskContext.Provider value={{taskDeleteHandler: this.taskDeleteHandler.bind(this)}}>
 
             <h2>Current Character: {this.state.character.name}</h2>
             <ul>
@@ -91,7 +104,7 @@ class TaskList extends Component {
 
                     <input type="submit" value="Add"  />
                 </form>
-            </>
+            </TaskContext.Provider>
         )
     }
 
