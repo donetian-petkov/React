@@ -10,9 +10,9 @@ class TaskList extends Component {
         this.state = {
 
             tasks: [
-                'Task 11',
-                'Task 22',
-                'Task 33'
+                {title:'Task 11', isCompleted: false},
+                {title:'Task 22', isCompleted: false},
+                {title:'Task 33', isCompleted: false}
             ],
 
             filter: 'all',
@@ -48,10 +48,16 @@ class TaskList extends Component {
         e.preventDefault();
 
         this.setState((state) =>({
-            tasks: [...state.tasks, state.newTask],
+            tasks: [...state.tasks, {title: state.newTask, isCompleted: false}],
             newTask: ''
         }));
 
+    }
+
+    taskClickHandler(taskTitle) {
+        this.setState(state => ({
+            tasks: state.tasks.map(x => x.title === taskTitle ? {...x, isCompleted: !x.isCompleted} : x)
+        }))
     }
 
     render() {
@@ -61,7 +67,13 @@ class TaskList extends Component {
 
             <h2>Current Character: {this.state.character.name}</h2>
             <ul>
-                {this.state.tasks.map(x => <TaskItem key={x} title={x} />)}
+                {this.state.tasks.map(x =>
+                    <TaskItem
+                    key={x.title}
+                    title={x.title}
+                    isCompleted={x.isCompleted}
+                    onClick={this.taskClickHandler.bind(this)}
+                    />)}
             </ul>
 
                 <form onSubmit={this.addNewTaskHandler.bind(this)}>
