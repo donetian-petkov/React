@@ -5,12 +5,17 @@ import { GameContext } from '../../contexts/GameContext';
 import * as gameService from '../../services/gameService';
 import * as commentService from '../../services/commentService';
 
+import { useAuthContext } from "../../contexts/AuthContext";
+
 const GameDetails = () => {
     const navigate = useNavigate();
     const { addComment, fetchGameDetails, selectGame, gameRemove } = useContext(GameContext);
     const { gameId } = useParams();
 
     const currentGame = selectGame(gameId);
+    const { user } = useAuthContext();
+
+    const isOwner = currentGame._ownerId === user._id;
 
     useEffect(() => {
         (async () => {
@@ -75,6 +80,7 @@ const GameDetails = () => {
                     }
                 </div>
 
+                { isOwner &&
                 <div className="buttons">
                     <Link to={`/games/${gameId}/edit`} className="button">
                         Edit
@@ -83,6 +89,7 @@ const GameDetails = () => {
                         Delete
                     </button>
                 </div>
+                }
             </div>
 
             <article className="create-comment">
